@@ -1,0 +1,22 @@
+切分数据：
+conda activate torch
+python prepare_data.py  --input_dir train_val --output_train_dir train --output_val_dir val
+训练：
+conda activate torch
+python main.py --data_url './train_val' --train_url './model_snapshots' --deploy_script_path './deploy_scripts' --arch 'resnet50' --num_classes 54 --workers 4 --epochs 100 --pretrained True --seed 0 --batch-size 96 --train_local ./checkpoints --learning-rate 0.001
+
+
+
+改动记录：
+1, line 133 :注释掉#args = prepare_data_on_modelarts(args)
+2, line 185 :把原来if args.pretrained:分支下的全部替换为：
+        if args.arch == 'resnet50':
+            model = models.resnet50(pretrained=True)
+        else:
+            model = models.resnet101(pretrained=True)
+3, line 468 :替换了save_best_checkpoint函数。
+
+
+
+
+

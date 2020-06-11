@@ -1,0 +1,313 @@
+实验记录：
+说明：本页所有实验都是用的focalloss之后的模型。
+
+
+实验一：
+se_resnet101:
+epochs = 100
+lr = 0.01
+结果：
+ * Acc@1 63.400 Acc@5 86.400
+best_acc1_suffix: 63.8.pth
+pthfile: epoch_50_63.8.pth
+copy config.json and customize_service.py success
+
+实验二：
+se_resnet152：
+epochs = 100
+lr = 0.01
+结果：
+ * Acc@1 65.200 Acc@5 86.000
+best_acc1_suffix: 66.4.pth
+pthfile: epoch_95_66.4.pth
+copy config.json and customize_service.py success
+
+
+实验三：添加focalloss
+结果：
+ * Acc@1 93.400 Acc@5 99.200
+best_acc1_suffix: 93.8.pth
+pthfile: epoch_50_93.8.pth
+
+
+实验四：使用train_arugment训练,49类加了网上爬的那部分。
+结果：
+ * Acc@1 98.400 Acc@5 99.600
+best_acc1_suffix: 98.8.pth
+pthfile: epoch_50_98.8.pth
+
+
+实验五：使用train_arugment训练,去掉了49类网上爬的那部分。
+结果：
+ * Acc@1 99.200 Acc@5 99.600
+best_acc1_suffix: 99.6.pth
+pthfile: epoch_55_99.6.pth
+
+
+baseline不同模型性能对比实验：
+训练数据集都是　train
+lr 都是　0.01
+epoch 都是 100
+
+(1),resnet18
+bz=160
+结果：
+ * Acc@1 91.400 Acc@5 98.600
+best_acc1_suffix: 92.0.pth
+pthfile: epoch_95_92.0.pth
+
+(2)resnet34
+bz=160
+epoch=150也是这个结果。
+结果：
+ * Acc@1 92.000 Acc@5 99.200
+best_acc1_suffix: 92.0.pth
+pthfile: epoch_100_92.0.pth
+
+(3)resnet50
+bz=80
+使用baseline训练结果：
+ * Acc@1 93.200 Acc@5 99.400
+best_acc1_suffix: 93.2.pth
+pthfile: epoch_75_93.2.pth
+
+使用train_balanced训练结果：
+ * Acc@1 92.800 Acc@5 99.200
+best_acc1_suffix: 93.2.pth
+pthfile: epoch_75_93.2.pth
+
+使用train_argument_v2训练结果：
+ * Acc@1 94.000 Acc@5 99.800
+best_acc1_suffix: 94.8.pth
+pthfile: epoch_80_94.8.pth
+
+
+
+(4)resnet101
+bz=60
+结果：
+ * Acc@1 92.800 Acc@5 98.600
+best_acc1_suffix: 93.4.pth
+pthfile: epoch_60_93.4.pth
+
+
+(5)resnet152
+bz=40
+结果：
+ * Acc@1 92.200 Acc@5 99.800
+best_acc1_suffix: 92.4.pth
+pthfile: epoch_80_92.4.pth
+
+(6)se-resnet101(pretrained)---------------------se-resnext101
+a.训练集：baseline
+bz=40
+结果：
+ * Acc@1 93.600 Acc@5 99.200
+best_acc1_suffix: 93.6.pth
+pthfile: epoch_50_93.6.pth
+
+b.在train_augment_v2上训练结果：
+epoch_100_96.6.pth
+
+c.在train_augment_v3上训练结果：
+bz=40
+lr=0.01
+ * Acc@1 95.600 Acc@5 99.800
+best_acc1_suffix: 96.0.pth
+pthfile: epoch_135_96.0.pth
+
+d.训练集：train_augment_v3
+bz=40
+lr=0.05
+结果：
+ * Acc@1 92.600 Acc@5 99.400
+best_acc1_suffix: 93.8.pth
+pthfile: epoch_85_93.8.pth
+
+e.在train_augment上训练结果：
+ * Acc@1 99.000 Acc@5 99.800
+best_acc1_suffix: 99.6.pth
+pthfile: epoch_70_99.6.pth
+
+(new)a.新增augment.py----------------augment.py
+数据集：baseline
+bz=40
+lr=0.01
+结果：
+ * Acc@1 96.000 Acc@5 99.600
+best_acc1_suffix: 96.6.pth
+pthfile: epoch_75_96.6.pth
+
+(new)b.新增augment.py
+数据集：augment_v2
+bz=40
+lr=0.01
+结果：
+ * Acc@1 97.600 Acc@5 99.600
+best_acc1_suffix: 97.6.pth
+pthfile: epoch_100_97.6.pth
+
+(new)c.新增augment.py
+改动：增加了focalloss-----------
+数据集：augment_v2
+bz=40
+lr=0.01
+结果：
+pthfile: epoch_90_96.8.pth
+
+(new)d.新增augment.py
+改动：在最后一层增加了bn层和dropout层。
+数据集：augment_v2
+bz=40
+lr=0.01
+结果：
+ * Acc@1 96.200 Acc@5 99.800
+best_acc1_suffix: 97.4.pth
+pthfile: epoch_75_97.4.pth
+
+(new)f.新增augment.py
+改动：去掉了最后一层中的bn层
+数据集：augment_v2
+bz=40
+lr=0.01
+结果：
+ * Acc@1 95.800 Acc@5 99.800
+best_acc1_suffix: 96.2.pth
+pthfile: epoch_95_96.2.pth
+
+(new)g.新增augment.py
+改动：最后一层回复原版，增加了labelsmooth
+结果：
+pthfile: epoch_50_96.6.pth
+
+
+f.使用warmup_lr--------------------------warmup
+训练集：train_augment_v3
+bz=40
+lr=0.01
+dropout=0.5
+结果：
+ * Acc@1 95.000 Acc@5 99.800
+best_acc1_suffix: 95.6.pth
+pthfile: epoch_45_95.6.pth
+
+g.使用GradualWarmupScheduler(step_ReduceLROnPlateau)
+训练集：train_augment_v3
+bz=40
+lr=0.01
+dropout=0.5
+结果：
+ * Acc@1 86.600 Acc@5 97.800
+best_acc1_suffix: 90.8.pth
+pthfile: epoch_5_90.8.pth
+
+g.使用GradualWarmupScheduler(30-step)
+训练集：train_augment_v3
+bz=40
+lr=0.01
+结果：
+ * Acc@1 93.800 Acc@5 99.600
+best_acc1_suffix: 93.8.pth
+pthfile: epoch_85_93.8.pth
+
+
+(7)se-resnet101(pretrained) 用data_argument训练
+bz=40
+结果：
+这个最后的打印信息有误：
+ * Acc@1 99.400 Acc@5 99.800
+best_acc1_suffix: 99.6.pth
+pthfile: epoch_55_99.6.pth
+查看checkpoints下的该权重大小为189.2M,如果使用se-resnet101的话,应该３００多。
+所以查看了epoch_50_99.6.pth发现是这个时间点生成的权重。
+即使用下面这个：
+ * Acc@1 99.400 Acc@5 99.6800
+best_acc1_suffix: 99.6.pth
+pthfile: epoch_50_99.6.pth
+
+
+(8)pnasnet
+训练集：train_augment_v2
+bz = 14
+lr = 0.01
+结果：
+ * Acc@1 94.400 Acc@5 99.400
+best_acc1_suffix: 94.8.pth
+pthfile: epoch_70_94.8.pth
+
+
+(9)针对weight_decay实验记录
+a.
+测试模型：senext101
+测试集：train_augment_v3
+bz=40
+lr=0.01
+weight_decay = 1e-4
+ * Acc@1 95.600 Acc@5 99.800
+best_acc1_suffix: 96.0.pth
+pthfile: epoch_135_96.0.pth
+
+b.
+测试模型：senext101
+测试集：train_augment_v3
+bz = 40
+lr = 0.01
+weight_decay = 1e-3
+结果：
+ * Acc@1 94.200 Acc@5 99.600
+best_acc1_suffix: 94.8.pth
+pthfile: epoch_50_94.8.pth
+
+b.
+测试模型：senext101
+测试集：train_augment_v3
+bz = 40
+lr = 0.01
+weight_decay = 5e-4
+结果：
+pthfile: epoch_90_95.4.pth
+
+
+(10)针对optimizer实验记录
+a.Adam
+bz=40
+lr=0.1
+50-step
+结果：
+ * Acc@1 73.800 Acc@5 92.600
+best_acc1_suffix: 75.4.pth
+pthfile: epoch_165_75.4.pth
+
+
+(11)se-resnet152-------------------------seresnet152
+bz=40
+lr=0.01
+结果：
+ * Acc@1 94.200 Acc@5 99.800
+best_acc1_suffix: 94.2.pth
+pthfile: epoch_55_94.2.pth
+
+
+(12)resnext101_32x48d--------------------------resnext101_32x48d
+a.
+bz=40
+lr=0.01
+结果：
+ * Acc@1 93.600 Acc@5 99.600
+best_acc1_suffix: 94.6.pth
+pthfile: epoch_60_94.6.pth
+
+b.改了loss
+bz=40
+lr=0.01
+结果：
+ * Acc@1 93.400 Acc@5 100.000
+best_acc1_suffix: 93.4.pth
+pthfile: epoch_150_93.4.pth
+
+
+
+
+
+
+

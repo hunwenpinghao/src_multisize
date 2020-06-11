@@ -1,0 +1,128 @@
+
+(a)实验一：
+模型：VGG16_bn
+bz=40
+lr=0.01
+ * Acc@1 95.000 Acc@5 99.800
+best_acc1_suffix: 95.2.pth
+pthfile: epoch_90_95.2.pth
+
+
+(b)efficientnet
+数据集：train_augment_v2
+bz=6
+lr=0.01
+结果：
+pthfile: epoch_70_96.8.pth
+
+(c)efficientnet
+数据集：baseline
+使用了labelsmooth
+bz=6
+lr=0.01
+结果：
+pthfile: epoch_40_97.0.pth
+
+(d)efficientnet
+数据集：baseline
+bz=6
+lr=0.005
+结果：
+pthfile: epoch_60_97.2.pth
+
+lr=0.003
+bestpth: epoch_55_97.0.pth
+
+input_size=456
+lr=0.005
+pthfile: epoch_85_95.8.pth
+
+input_size=300
+lr=0.005
+pthfile: epoch_30_96.2.pth
+
+input_size=224
+lr=0.01
+pthfile: epoch_95_95.2.pth
+
+input_size=224
+lr=0.005
+pthfile: epoch_80_95.8.pth
+
+(e)efficientnet-b5
+PowerPIL()
+数据集：train_val_1000
+input_size=456
+bz=6
+lr=0.005
+结果：
+best: epoch_55_97.9.pth
+提交：0.962
+
+(e)efficientnet-b5
+去掉了PowerPIL()
+数据集：train_val_1000
+input_size=456
+bz=6
+lr=0.005
+结果：
+ * Acc@1 98.000 Acc@5 99.800
+best_acc1_suffix: 98.2.pth
+pthfile: epoch_50_98.2.pth
+
+(f)添加注意力在第一层
+eff-b5
+数据集：baseline
+456
+6
+0.005
+结果：
+best: epoch_40_70.0.pth
+
+(g)在每一层的block中添加了cbam
+pthfile: epoch_65_96.0.pth
+
+(h)将16/21/22/23层特征拉出来
+best: epoch_35_95.2.pth
+
+
+(i)加了sa,ca
+eff-b5
+6
+456
+0.005
+数据集：train_val_1000
+best: epoch_90_98.3.pth
+提交：　0.973
+
+
+(j)最后一层将原来的双loss改为融合到一层fc中
+eff-b5
+6
+456
+0.005
+数据集： train_val_1000
+best: epoch_65_98.2.pth
+
+
+(k)RACNN
+eff-b5
+6+resume5
+456
+0.004
+train_val_1000
+best: epoch_50_97.9.pth
+
+
+(l)Ranger, mish function
+eff-b5
+456
+0.005
+train_val_1000
+best:
+
+
+
+
+
+
