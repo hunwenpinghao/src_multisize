@@ -1,5 +1,5 @@
 # src_multisize
-这个工程是我在参加华为2019创新大赛的工程文件，里面有各种模型的backbone,例如比赛中常用到的
+这个工程是我在参加华为2019人工智能创新大赛的工程文件，里面有各种模型的backbone,例如比赛中常用到的
 resnet系列：
 se_resnext101_32x4d, resnet50, pnasnet5large, se_resnet152, resnext101_32x48d_wsl
 efficientnet系列：
